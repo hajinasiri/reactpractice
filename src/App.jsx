@@ -32,12 +32,8 @@ updateme (text,id,username) {
 
 
 updatename (name) {
+  this.ws.send(JSON.stringify(name));
 
-  this.setState({
-    currentUser: {
-      name: name
-    }
-  });
 }
 
 
@@ -49,9 +45,22 @@ componentDidMount() {
 
   });
   this.ws.addEventListener('message', (event) => {
-    var data=JSON.parse(event.data);
-    const mymass = this.state.messages.concat([data]);
-    this.setState({messages: mymass})
+    var temp = event.data;
+
+
+
+    if((temp.charAt(0) === '{')&&(temp.charAt(temp.length-1)==='}')){
+      var data=JSON.parse(event.data);
+      const mymass = this.state.messages.concat([data]);
+      this.setState({messages: mymass})
+    }else{
+      this.setState({
+    currentUser: {
+      name: name
+    }
+  });
+    }
+
 
 
     // const newMessages = this.state.messages;
