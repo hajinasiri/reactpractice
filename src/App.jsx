@@ -14,18 +14,7 @@ class App extends Component {
     super(props);
     this.state = {
       currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
-      messages: [
-        {
-          username: "Bob",
-          content: "Has anyone seen my marbles?",
-          id:"1"
-        },
-        {
-          username: "Anonymous",
-          content: "No, I think you lost them. You lost your marbles Bob. You lost them for good.",
-          id: "2"
-        }
-      ]
+      messages: []
     };
     this.updateme = this.updateme.bind(this);
     this.updatename = this.updatename.bind(this);
@@ -33,12 +22,15 @@ class App extends Component {
 
 updateme (text,id,username) {
   var new_obj = [{username: username, content:text, id:uuid()}];
-  const mymass = this.state.messages.concat(new_obj);
+  this.ws.send(JSON.stringify(new_obj[0]));
+
 
     // Update the state of the app component.
     // Calling setState will trigger a call to render() in App and all child components.
-    this.setState({messages: mymass})
+
 }
+
+
 updatename (name) {
 
   this.setState({
@@ -50,29 +42,54 @@ updatename (name) {
 
 
 componentDidMount() {
+
+
+  this.ws = new WebSocket('ws://localhost:3001');
+  this.ws.addEventListener('open', () => {
+
+  });
+  this.ws.addEventListener('message', (event) => {
+    var data=JSON.parse(event.data);
+    const mymass = this.state.messages.concat([data]);
+    this.setState({messages: mymass})
+
+
+    // const newMessages = this.state.messages;
+    // const messageObject = JSON.parse(event.data);
+    // newMessages.push(messageObject);
+    // this.setState({messages: newMessages});
+  });
+  // this.ws.onmessage= e => {
+
+  //   console.log(message)};/*this.setState({ users: Object.values(JSON.parse(e.data)) })*/
+  this.ws.onerror = e => this.setState({ error: 'WebSocket error' })
+  this.ws.onclose = e => !e.wasClean && this.setState({ error: `WebSocket error: ${e.code} ${e.reason}` })
+
   console.log("componentDidMount <App />");
   setTimeout(() => {
     console.log("Simulating incoming message");
     // Add a new message to the list of messages in the data store
-    const newMessage = {id: 3, username: "Michelle", content: "Hello there!"};
-    const messages = this.state.messages.concat(newMessage);
 
     // Update the state of the app component.
     // Calling setState will trigger a call to render() in App and all child components.
-    this.setState({messages: messages})
-  }, 3000);
+
+  });
+}
+
+componentWillUnmount() {
+  this.ws.close()
 }
 
 
-  render() {
-    return (
-        <div>
-            <NavBar/>
-            <MessageList Messages={this.state.messages}/>
-            <ChatBar currentUser={this.state.currentUser} updatename={this.updatename} updateme={this.updateme} />
-        </div>
+render() {
+  return (
+      <div>
+          <NavBar/>
+          <MessageList Messages={this.state.messages}/>
+          <ChatBar currentUser={this.state.currentUser} updatename={this.updatename} updateme={this.updateme} />
+      </div>
 
-  );
-  }
+);
+}
 }
 export default App;
