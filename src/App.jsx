@@ -31,8 +31,18 @@ updateme (text,id,username) {
 }
 
 
-updatename (name) {
-  this.ws.send(JSON.stringify(name));
+updatename (newname, oldname) {
+  if(!(newname === oldname)){
+    var obj = {newname:newname , type:"name", oldname: oldname};
+  this.ws.send(JSON.stringify(obj));
+   this.setState({
+    currentUser: {
+      name: name
+    }
+  });
+  }
+
+
 
 }
 
@@ -47,18 +57,17 @@ componentDidMount() {
   this.ws.addEventListener('message', (event) => {
     var temp = event.data;
 
+     var data=JSON.parse(event.data);
 
+    if(data.type === "name"){
+      var news = [{username:"" , content:(data.oldname + " changed name to "+ data.newname), id:uuid()}];
+      const mymass = this.state.messages.concat(news);
+      this.setState({messages: mymass})
 
-    if((temp.charAt(0) === '{')&&(temp.charAt(temp.length-1)==='}')){
-      var data=JSON.parse(event.data);
+    }else{
       const mymass = this.state.messages.concat([data]);
       this.setState({messages: mymass})
-    }else{
-      this.setState({
-    currentUser: {
-      name: name
-    }
-  });
+
     }
 
 

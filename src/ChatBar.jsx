@@ -6,6 +6,7 @@ class ChatBar extends Component {
     super(props);
     this.state = {
       uname: this.props.currentUser.name,
+      oldname: this.props.currentUser.name,
       message: ''
     }
   }
@@ -13,13 +14,15 @@ class ChatBar extends Component {
   handlecheck = (event) => {
     if (event.charCode === 13 /* Enter */) {
       var myname = this.state.uname;
-      this.props.updatename(myname);
+      var old=this.state.oldname;
+      this.props.updatename(myname,old);
 
     }
   }
 
   changeName = (event) => {
     this.setState({uname: event.target.value})
+
   }
 
   handleClick = (event) => {
