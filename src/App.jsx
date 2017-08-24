@@ -21,7 +21,7 @@ class App extends Component {
   }
 
 updateme (text,id,username) {
-  var new_obj = [{username: username, content:text, id:uuid()}];
+  var new_obj = [{username: username, content:text, id:uuid(), type: "postNotification"}];
   this.ws.send(JSON.stringify(new_obj[0]));
 
 
@@ -33,7 +33,7 @@ updateme (text,id,username) {
 
 updatename (newname, oldname) {
   if(!(newname === oldname)){
-    var obj = {newname:newname , type:"name", oldname: oldname};
+    var obj = {newname:newname , mytype:"name", oldname: oldname, type:"broadcast"};
   this.ws.send(JSON.stringify(obj));
    this.setState({
     currentUser: {
@@ -58,17 +58,16 @@ componentDidMount() {
     var temp = event.data;
 
      var data=JSON.parse(event.data);
-
-    if(data.type === "name"){
-      var news = [{username:"" , content:(data.oldname + " changed name to "+ data.newname), id:uuid()}];
-      const mymass = this.state.messages.concat(news);
-      this.setState({messages: mymass})
+     var mymass = {};
+    if(data.mytype === "name"){
+      var news = [{username:"" , content:(data.oldname + " changed their name to "+ data.newname), id:uuid()}];
+      mymass = this.state.messages.concat(news);
 
     }else{
-      const mymass = this.state.messages.concat([data]);
-      this.setState({messages: mymass})
+      mymass = this.state.messages.concat([data]);
 
     }
+    this.setState({messages: mymass})
 
 
 
