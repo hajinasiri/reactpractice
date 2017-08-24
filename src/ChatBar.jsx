@@ -7,7 +7,8 @@ class ChatBar extends Component {
     this.state = {
       uname: this.props.currentUser.name,
       oldname: this.props.currentUser.name,
-      message: ''
+      message: '',
+      text:''
     }
   }
 
@@ -21,6 +22,10 @@ class ChatBar extends Component {
     }
   }
 
+  changemess = (event) => {
+    this.setState({text: event.target.value})
+  }
+
   changeName = (event) => {
     this.setState({uname: event.target.value})
 
@@ -32,6 +37,7 @@ class ChatBar extends Component {
 
       var mymess = event.target.value;
       this.props.updateme(mymess,1,this.state.uname);
+      this.setState({text:""})
     }
   }
 
@@ -41,7 +47,7 @@ class ChatBar extends Component {
         <div>
           <footer className="chatbar">
             <input className="chatbar-username" placeholder="Your Name (Optional)" value={this.state.uname} onChange={this.changeName} onKeyPress={this.handlecheck} />
-            <input className="chatbar-message" placeholder="Type a message and hit ENTER" onKeyPress={this.handleClick}/>
+            <input className="chatbar-message" placeholder="Type a message and hit ENTER" value = {this.state.text} onChange ={this.changemess} onKeyPress={this.handleClick}/>
 
           </footer>
       </div>

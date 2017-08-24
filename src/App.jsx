@@ -59,7 +59,7 @@ componentDidMount() {
     var temp = event.data;
 
      var data=JSON.parse(event.data);
-     console.log(event);
+
      var mymass = {};
     if(data.type === "name"){
       var news = [{username:"" , content:(data.oldname + " changed their name to "+ data.newname), id:uuid(), count:0}];
