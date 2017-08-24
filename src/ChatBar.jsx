@@ -16,6 +16,7 @@ class ChatBar extends Component {
       var myname = this.state.uname;
       var old=this.state.oldname;
       this.props.updatename(myname,old);
+      this.setState({oldname: this.state.uname})
 
     }
   }

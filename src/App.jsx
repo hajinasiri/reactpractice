@@ -14,14 +14,15 @@ class App extends Component {
     super(props);
     this.state = {
       currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
-      messages: []
+      messages: [],
+      count:0
     };
     this.updateme = this.updateme.bind(this);
     this.updatename = this.updatename.bind(this);
   }
 
 updateme (text,id,username) {
-  var new_obj = [{username: username, content:text, id:uuid(), type: "postNotification"}];
+  var new_obj = [{username: username, content:text, id:uuid(), type: "postNotification", count:0}];
   this.ws.send(JSON.stringify(new_obj[0]));
 
 
@@ -33,9 +34,9 @@ updateme (text,id,username) {
 
 updatename (newname, oldname) {
   if(!(newname === oldname)){
-    var obj = {newname:newname , mytype:"name", oldname: oldname, type:"broadcast"};
-  this.ws.send(JSON.stringify(obj));
-   this.setState({
+    var obj = {newname:newname , mytype:"name", oldname: oldname, type:"name"};
+    this.ws.send(JSON.stringify(obj));
+    this.setState({
     currentUser: {
       name: name
     }
@@ -58,16 +59,21 @@ componentDidMount() {
     var temp = event.data;
 
      var data=JSON.parse(event.data);
+     console.log(event);
      var mymass = {};
-    if(data.mytype === "name"){
-      var news = [{username:"" , content:(data.oldname + " changed their name to "+ data.newname), id:uuid()}];
+    if(data.type === "name"){
+      var news = [{username:"" , content:(data.oldname + " changed their name to "+ data.newname), id:uuid(), count:0}];
       mymass = this.state.messages.concat(news);
+      this.setState({messages: mymass});
 
-    }else{
+    }else if(data.type === "postNotification"){
       mymass = this.state.messages.concat([data]);
+      this.setState({messages: mymass});
 
+    }else if(data.type === "count"){
+      this.setState({count:data.count})
     }
-    this.setState({messages: mymass})
+
 
 
 
@@ -101,7 +107,7 @@ componentWillUnmount() {
 render() {
   return (
       <div>
-          <NavBar/>
+          <NavBar count={this.state.count}/>
           <MessageList Messages={this.state.messages}/>
           <ChatBar currentUser={this.state.currentUser} updatename={this.updatename} updateme={this.updateme} />
       </div>
