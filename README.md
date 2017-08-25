@@ -1,45 +1,28 @@
-React Boilerplate
-=====================
 
-A minimal and light dev environment for ReactJS.
+### Chatty app
+This is a chatt app, and it has one page. 
+- Users can open the page and chat with other users that have the page open.
+- The number of online users is dispalyed on the top right side of the page.
+- When the user types a text in text box and hits Enter, the message shows up on all the user's page.
+- Text box gets cleared when the user hits Enter.
+- User can change their name by typing the new name in the name box and hitting Enter key. 
+- When a user changes their name, a message shows up on all the user's page saying that that particular user changed their name from the old name to the new name.
 
-### Usage
-
-Clone the boilerplate and create your own git repo.
-
-```
-git clone git@github.com:lighthouse-labs/react-simple-boilerplate.git
-cd react-simple-boilerplate
-git remote rm origin
-git remote add origin [YOUR NEW REPOSITORY]
-# Manually update your package.json file
-```
-
-Install the dependencies and start the server.
-
-```
-npm install
-npm start
-open http://localhost:3000
-```
-
-### Static Files
-
-You can store static files like images, fonts, etc in the `build` folder.
-
-For example, if you copy a file called my_image.png into the build folder you can access it using `http://localhost:3000/build/my_image.png`.
-
-### Linting
-
-This boilerplate project includes React ESLint configuration.
-
-```
-npm run lint
-```
 
 ### Dependencies
-
+app server:
 * React
+* React-dom
+* sass-loader
 * Webpack
 * [babel-loader](https://github.com/babel/babel-loader)
 * [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+
+socket server dependencies:
+* express
+* ws
+
+### Running the app
+This app has an app server that can be run by typing node "server.js" on command line inside "firstReact" foler. There is also a socket server that can be run by typing "node server.js" on command line inside "chatty_server" foler.
+
+### ScreenShots
