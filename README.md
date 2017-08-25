@@ -1,5 +1,5 @@
 
-### Chatty app
+# Chatty app
 This is a chatt app, and it has one page. 
 - Users can open the page and chat with other users that have the page open.
 - The number of online users is dispalyed on the top right side of the page.
@@ -9,7 +9,7 @@ This is a chatt app, and it has one page.
 - When a user changes their name, a message shows up on all the user's page saying that that particular user changed their name from the old name to the new name.
 
 
-### Dependencies
+# Dependencies
 app server:
 * React
 * React-dom
@@ -22,7 +22,8 @@ socket server dependencies:
 * express
 * ws
 
-### Running the app
+# Running the app
 This app has an app server that can be run by typing node "server.js" on command line inside "firstReact" foler. There is also a socket server that can be run by typing "node server.js" on command line inside "chatty_server" foler.
 
-### ScreenShots
+# ScreenShots
+- !["The chatty app page"](https://github.com/hajinasiri/reactpractice/blob/master/docs/Screen%20Shot%202017-08-25%20at%208.58.30%20AM.png?raw=true)
