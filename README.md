@@ -24,6 +24,7 @@ socket server dependencies:
 
 # Running the app
 This app has an app server that can be run by typing node "server.js" on command line inside "firstReact" foler. There is also a socket server that can be run by typing "node server.js" on command line inside "chatty_server" foler.
+Both servers are on local host, and the app server runs at "localhost:3000".
 
 # ScreenShots
 - !["The chatty app page"](https://github.com/hajinasiri/reactpractice/blob/master/docs/Screen%20Shot%202017-08-25%20at%208.58.30%20AM.png?raw=true)
