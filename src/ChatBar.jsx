@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+
+
 class ChatBar extends Component {
 
   constructor(props) {
@@ -45,6 +47,7 @@ class ChatBar extends Component {
 
     return (
         <div>
+
           <footer className="chatbar">
             <input className="chatbar-username" placeholder="Your Name (Optional)" value={this.state.uname} onChange={this.changeName} onKeyPress={this.handlecheck} />
             <input className="chatbar-message" placeholder="Type a message and hit ENTER" value = {this.state.text} onChange ={this.changemess} onKeyPress={this.handleClick}/>
